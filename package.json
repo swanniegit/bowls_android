@@ -1,0 +1,25 @@
+{
+  "name": "bowls-android",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --open",
+    "build": "vite build",
+    "cap:dev": "cap sync android",
+    "cap:build": "npm run build && cap sync android",
+    "open": "cap open android",
+    "android": "npm run cap:build && cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/app": "^8.1.0",
+    "@capacitor/core": "^8.3.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.3.0",
+    "sharp": "^0.34.5",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8"
+  }
+}
