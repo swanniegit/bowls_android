@@ -325,3 +325,34 @@
 }
 
 .loading-text { text-align: center; color: var(--text-muted); padding: 2rem; }
+
+/* ── Trail & Rest drill buttons ──────────────────────────────────────────────── */
+.trail-rest-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-trail-rest {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity 0.15s;
+}
+.btn-trail-rest:active { opacity: 0.7; }
+.btn-trail-rest:disabled { opacity: 0.4; }
+
+.trail-pts  { font-size: 1.1rem; font-weight: 700; min-width: 3rem; }
+.trail-label { font-size: 1rem; font-weight: 600; }
+
+.btn-trail { background: #e8f5e9; border-color: #4caf50; color: #1b5e20; }
+.btn-touch { background: #e3f2fd; border-color: #2196f3; color: #0d47a1; }
+.btn-near  { background: #fff8e1; border-color: #ffc107; color: #e65100; }
+.btn-none  { background: #fafafa; border-color: #bdbdbd; color: #616161; }

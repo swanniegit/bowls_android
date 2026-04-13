@@ -136,6 +136,7 @@ async function loadPlay(container, attemptId, challengeId) {
     sequences:     challenge.sequences,
     totalBowls:    challenge.total_bowls,
     maxPossible:   challenge.max_possible_score,
+    scoringType:   challenge.scoring_type ?? 'standard',
     rollCount:     progress.roll_count   ?? 0,
     totalScore:    progress.total_score  ?? 0,
     toucher:       false,
@@ -205,6 +206,26 @@ function renderPlayView(container, state) {
           </div>
         </div>
 
+        ${state.scoringType === 'trail_rest' ? `
+        <div class="trail-rest-options">
+          <button class="btn-trail-rest btn-trail" data-result="30">
+            <span class="trail-pts">3 pts</span>
+            <span class="trail-label">Successful Trail</span>
+          </button>
+          <button class="btn-trail-rest btn-touch" data-result="31">
+            <span class="trail-pts">2 pts</span>
+            <span class="trail-label">Resting Touch</span>
+          </button>
+          <button class="btn-trail-rest btn-near" data-result="32">
+            <span class="trail-pts">1 pt</span>
+            <span class="trail-label">Within Mat Width</span>
+          </button>
+          <button class="btn-trail-rest btn-none" data-result="33">
+            <span class="trail-pts">0 pts</span>
+            <span class="trail-label">None</span>
+          </button>
+        </div>
+        ` : `
         <div class="result-area">
           <div class="green-container">
             <button class="btn-miss btn-miss-top"    data-result="22">Too Long / Ditch</button>
@@ -227,6 +248,7 @@ function renderPlayView(container, state) {
             ${state.toucher ? 'Toucher ✓' : 'Toucher'}
           </button>
         </div>
+        `}
 
         <div class="action-bar challenge-action-bar">
           <button class="btn btn--undo" id="undo-btn" ${state.rollCount === 0 ? 'disabled' : ''}>
@@ -246,9 +268,9 @@ function renderPlayView(container, state) {
   container.querySelector('#back-btn').addEventListener('click', () => router.go('challenges'));
   container.querySelector('#quit-btn').addEventListener('click', () => router.go('challenges'));
 
-  // Toucher
+  // Toucher (standard challenges only)
   const toucherBtn = container.querySelector('#toucher-btn');
-  toucherBtn.addEventListener('click', () => {
+  toucherBtn?.addEventListener('click', () => {
     state.toucher = !state.toucher;
     toucherBtn.classList.toggle('active', state.toucher);
     toucherBtn.textContent = state.toucher ? 'Toucher ✓' : 'Toucher';
@@ -257,10 +279,16 @@ function renderPlayView(container, state) {
   // Undo
   container.querySelector('#undo-btn').addEventListener('click', () => undoRoll(container, state));
 
-  // Bowl positions
-  container.querySelectorAll('.btn-pos, .btn-miss').forEach(btn => {
-    btn.addEventListener('click', () => saveRoll(container, state, parseInt(btn.dataset.result)));
-  });
+  // Bowl positions — standard grid or trail_rest buttons
+  if (state.scoringType === 'trail_rest') {
+    container.querySelectorAll('.btn-trail-rest').forEach(btn => {
+      btn.addEventListener('click', () => saveRoll(container, state, parseInt(btn.dataset.result)));
+    });
+  } else {
+    container.querySelectorAll('.btn-pos, .btn-miss').forEach(btn => {
+      btn.addEventListener('click', () => saveRoll(container, state, parseInt(btn.dataset.result)));
+    });
+  }
 
   // Sequence modal dismiss
   if (state.seqModal) {
@@ -292,7 +320,7 @@ function seqModalHTML(data, seqCount) {
 }
 
 async function saveRoll(container, state, result) {
-  container.querySelectorAll('.btn-pos, .btn-miss').forEach(b => { b.disabled = true; });
+  container.querySelectorAll('.btn-pos, .btn-miss, .btn-trail-rest').forEach(b => { b.disabled = true; });
 
   const pos = getPosition(state.sequences, state.rollCount);
 
