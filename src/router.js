@@ -14,6 +14,7 @@ import { renderChallenges } from './pages/challenges.js';
 import { renderMatches }    from './pages/matches.js';
 import { renderProfile }      from './pages/profile.js';
 import { renderCompetitions } from './pages/competitions.js';
+import { renderCommunity }   from './pages/community.js';
 
 const routes = {
   '':           renderHome,
@@ -26,6 +27,7 @@ const routes = {
   'matches':    renderMatches,
   'profile':       renderProfile,
   'competitions':  renderCompetitions,
+  'community':     renderCommunity,
 };
 
 const app = document.getElementById('app');

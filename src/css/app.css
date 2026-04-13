@@ -170,6 +170,12 @@ body {
   padding: 1.25rem 1rem;
 }
 
+.tile--community {
+  background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%);
+  color: #fff;
+}
+.tile--community .tile__label { color: #fff; }
+
 /* Login page */
 .page--login {
   justify-content: center;

@@ -40,6 +40,10 @@ export async function renderHome(container, params = {}) {
           <span class="tile__icon">🏅</span>
           <span class="tile__label">Competitions</span>
         </a>
+        <a class="tile tile--wide tile--community" href="#/community">
+          <span class="tile__icon">⛳</span>
+          <span class="tile__label">The Green</span>
+        </a>
       </main>
     </div>
   `;
