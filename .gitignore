@@ -9,6 +9,7 @@ android/build/
 android/local.properties
 *.keystore
 *.jks
+keystore.properties
 
 # Capacitor
 android/app/src/main/assets/public/
